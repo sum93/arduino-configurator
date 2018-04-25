@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Arduino Configurator - Time Measure (timer)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Custom styling -->
+  <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+
+  <!-- Bootstrap 4 CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <header class="navbar col-md-12 bg-arduino header">
+      <a class="home-link" href="../../index.html">
+        <h1>Arduino Configurator</h1>
+      </a>
+      <a class="d-none d-md-block" href="https://www.arduino.cc/" target="_blank">
+        <img class="logo" src="../../images/arduino_logo.png">
+      </a>
+    </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-md-2 col-xl-1 bg-arduino sidebar">
+        <nav class="nav flex-column text-center">
+            <a class="sidebar-item" href="#timerMenu" data-toggle="collapse">Timer</a>
+      <div class="sub-menu collapse" id="timerMenu">
+        <a class="sub-menu-item" href="#">Time Measure</a>
+          <a class="sub-menu-item" href="periodicInterruptGeneration.html">Periodic Interrupt Generation</a>
+        <a class="sub-menu-item" href="squareWaveGeneration.html">Square Wave Generation</a>
+        <a class="sub-menu-item" href="pulseWidthModulation.html">Pulse Width Modulation</a>
+      </div>
+            <a class="sidebar-item" href="#ADCMenu" data-toggle="collapse">ADC</a>
+      <div class="sub-menu collapse" id="ADCMenu">
+        <a class="sub-menu-item" href="#">Function #1</a>
+          <a class="sub-menu-item" href="#">Function #2</a>
+      </div>
+            <a class="sidebar-item" href="#moduleMenu1" data-toggle="collapse">Module #1</a>
+      <div class="sub-menu collapse" id="moduleMenu1">
+        <a class="sub-menu-item" href="#">Function #1</a>
+          <a class="sub-menu-item" href="#">Function #2</a>
+          <a class="sub-menu-item" href="#">Function #3</a>
+      </div>
+            <a class="sidebar-item" href="#moduleMenu2" data-toggle="collapse">Module #2</a>
+      <div class="sub-menu collapse" id="moduleMenu2">
+        <a class="sub-menu-item" href="#">Function #1</a>
+          <a class="sub-menu-item" href="#">Function #2</a>
+          <a class="sub-menu-item" href="#">Function #3</a>
+      </div>
+          </nav>
+        </div>
+    <div class="col-12 offset-md-2 col-md-10 offset-xl-1 col-xl-11 content">
+      <div class="row my-4">
+        <div class="offset-1">
+          <h3><span class="title-pre">Timer</span> / <span class="title"><b>Time Measure</b></span></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Set Up</h4>
+          <form>
+                  <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="mode">Mode:</label>
+          </div>
+          <div class="col-8">
+                      <select class="form-control" id="mode">
+              <option>polling</option>
+              <option>interrupt</option>
+            </select>
+          </div>
+                  </div>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="resolution">Resolution:</label>
+          </div>
+          <div class="col-8">
+                      <select class="form-control" id="resolution">
+              <option>0.0625 us</option>
+              <option>0.5 us</option>
+              <option>4 us</option>
+              <option>16 us</option>
+              <option>64 us</option>
+            </select>
+          </div>
+                  </div>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="edge">Edge Detection:</label>
+          </div>
+          <div class="col-8">
+                      <select class="form-control" id="edge">
+              <option value="high">Up - Down (upper)</option>
+              <option value="low">Down - Up (lower)</option>
+              <option value="period_up">Up - Up (period)</option>
+              <option value="period_down">Down - Down (period)</option>
+            </select>
+          </div>
+                  </div>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="pin">Input Pin:</label>
+          </div>
+          <div class="col-8">
+                      <select class="form-control" id="pin">
+            <option disabled>Digital:</option>
+              <option>ICP1</option>
+            <option disabled>Analog:</option>
+              <option>AIN1</option>
+              <option>ADC0</option>
+              <option>ADC1</option>
+              <option>ADC2</option>
+              <option>ADC3</option>
+              <option>ADC4</option>
+              <option>ADC5</option>
+            </select>
+          </div>
+                  </div>
+          <div class="row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="software">Software Extension:</label>
+          </div>
+          <div class="col-8 form-check">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="software">
+          </div>
+                  </div>
+          <div class="form-group row my-3">
+            <div class="col-12">
+                      <button type="button" onclick="getTimeMeasureCode();" class="btn btn-arduino col-12">Get your code!</button>
+          </div>
+            </div>
+          <div class="row col-12 p-0 m-0">
+                    <label for="result"><b>Your Code:</b></label>
+            <textarea class="form-control result-code" id="result" rows="10"></textarea>
+          </div>
+          
+          <div class="form-group row my-3">
+            <div class="col-12">
+                      <button type="button" onclick="copyCode();" class="btn btn-arduino col-12">Copy to clipboard!</button>
+          </div>
+            </div>
+                </form>
+        </div>
+        <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
+          <h4 class="title">Additional Information</h4>
+          <h5>Mode:</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  </body>
+  <script src="../../js/scripts.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Arduino Configurator - Pulse Width Modulation (timer)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Custom styling -->
+  <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+
+  <!-- Bootstrap 4 CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <header class="navbar col-md-12 bg-arduino header">
+      <a class="home-link" href="../../index.html">
+        <h1>Arduino Configurator</h1>
+      </a>
+      <a class="d-none d-md-block" href="https://www.arduino.cc/" target="_blank">
+        <img class="logo" src="../../images/arduino_logo.png">
+      </a>
+    </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-md-2 col-xl-1 bg-arduino bg-arduino sidebar">
+        <nav class="nav flex-column text-center">
+            <a class="sidebar-item" href="#timerMenu" data-toggle="collapse">Timer</a>
+      <div class="sub-menu collapse" id="timerMenu">
+        <a class="sub-menu-item" href="timeMeasure.html">Time Measure</a>
+          <a class="sub-menu-item" href="periodicInterruptGeneration.html">Periodic Interrupt Generation</a>
+        <a class="sub-menu-item" href="squareWaveGeneration.html">Square Wave Generation</a>
+        <a class="sub-menu-item" href="#">Pulse Width Modulation</a>
+      </div>
+            <a class="sidebar-item" href="#ADCMenu" data-toggle="collapse">ADC</a>
+      <div class="sub-menu collapse" id="ADCMenu">
+        <a class="sub-menu-item" href="#">Function #1</a>
+          <a class="sub-menu-item" href="#">Function #2</a>
+      </div>
+            <a class="sidebar-item" href="#moduleMenu1" data-toggle="collapse">Module #1</a>
+      <div class="sub-menu collapse" id="moduleMenu1">
+        <a class="sub-menu-item" href="#">Function #1</a>
+          <a class="sub-menu-item" href="#">Function #2</a>
+          <a class="sub-menu-item" href="#">Function #3</a>
+      </div>
+            <a class="sidebar-item" href="#moduleMenu2" data-toggle="collapse">Module #2</a>
+      <div class="sub-menu collapse" id="moduleMenu2">
+        <a class="sub-menu-item" href="#">Function #1</a>
+          <a class="sub-menu-item" href="#">Function #2</a>
+          <a class="sub-menu-item" href="#">Function #3</a>
+      </div>
+          </nav>
+        </div>
+    <div class="col-12 offset-md-2 col-md-10 offset-xl-1 col-xl-11 content">
+      <div class="row my-4">
+        <div class="offset-1">
+          <h3><span class="title-pre">Timer</span> / <span class="title"><b>Pulse Width Modulation</b></span></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Set Up</h4>
+          <form>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="usage">Usage:</label>
+          </div>
+          <div class="col-8">
+                      <select class="form-control" id="usage" onchange="setFrequencySelect()">
+              <option value="0">Power Regulation / Retrification / DAC Applications</option>
+              <option value="1">Motor Control (phase correct)</option>
+              <option value="2">Motor Control (phase and frequency correct)</option>
+            </select>
+          </div>
+                  </div>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="frequency">Frequency:</label>
+          </div>
+          <div id="frequencySelect" class="col-8">
+                      <select class="form-control" onchange="setCusmtomFrequency()" id="frequency">
+            <option selected disabled>Choose a frequency!</option>
+            <option disabled>8-bit mode:</option>
+              <option value="0">62500 Hz</option>
+              <option value="1">7812.5 Hz</option>
+              <option value="2">976.56 Hz</option>
+              <option value="3">122.07 Hz</option>
+              <option value="4">15.26 Hz</option>
+            <option disabled>9-bit mode:</option>
+              <option value="5">31250 Hz</option>
+              <option value="6">3906.25 Hz</option>
+              <option value="7">488.28 Hz</option>
+              <option value="8">61.04 Hz</option>
+              <option value="9">7.63 Hz</option>
+            <option disabled>10-bit mode:</option>
+              <option value="10">15625 Hz</option>
+              <option value="11">1953.13 Hz</option>
+              <option value="12">244.14 Hz</option>
+              <option value="13">30.52 Hz</option>
+              <option value="14">3.81 Hz</option>
+            <option disabled>Custom:</option>
+              <option value="15">Using OCR1A - one pwm output, double buffered</option>
+              <option value="16">Using ICR1 - two pwm outputs, external event can set</option>
+            </select>
+          </div>
+                  </div>
+          <div id="customFrequencyForm">
+          </div>
+            <h5>Outputs:</h5>
+            <div id="outputA">
+            <div class="form-group row">
+            <div class="col-4">
+              <label class="label-right col-form-label" for="activeA">Active A:</label>
+            </div>
+            <div class="col-8 form-check">
+              <input type="checkbox" class="form-check-input position-static label-right mt-3" id="activeA">
+            </div>
+            </div>
+            <div class="form-group row">
+            <div class="col-4">
+              <label class="label-right col-form-label" for="invertedA">Inverted A:</label>
+            </div>
+            <div class="col-8 form-check">
+              <input type="checkbox" class="form-check-input position-static label-right mt-3" id="invertedA">
+            </div>
+            </div>
+            </div>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="activeB">Active B:</label>
+          </div>
+          <div class="col-8 form-check">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="activeB">
+          </div>
+                  </div>
+          <div class="form-group row">
+            <div class="col-4">
+                      <label class="label-right col-form-label" for="invertedB">Inverted B:</label>
+          </div>
+          <div class="col-8 form-check">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="invertedB">
+          </div>
+                  </div>
+          <div class="form-group row my-3">
+            <div class="col-12">
+                      <button type="button" onclick="getPwmCode();" class="btn btn-arduino col-12">Get your code!</button>
+          </div>
+            </div>
+          <div class="row col-12 p-0 m-0">
+                    <label for="result"><b>Your Code:</b></label>
+            <textarea class="form-control result-code" id="result" rows="10"></textarea>
+          </div>
+          
+          <div class="form-group row my-3">
+            <div class="col-12">
+                      <button type="button" onclick="copyCode();" class="btn btn-arduino col-12">Copy to clipboard!</button>
+          </div>
+            </div>
+                </form>
+        </div>
+        <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
+          <h4>Additional Information</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  </body>
+  <script src="../../js/scripts.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>
