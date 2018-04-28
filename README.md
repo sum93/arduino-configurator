@@ -16,5 +16,5 @@ This web application helps you configure your Arduino (Atmel ATmega328p) for som
 
 ## TODOS:
 * Provide information instead of samlpe text.
-* *Start using a frame js work & clean up the html / js code.*
+* **Start using a frame js work & clean up the html / js code.**
 * Organise js code into different files.
