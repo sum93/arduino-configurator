@@ -10,59 +10,29 @@
 
     <!-- Bootstrap 4 CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+    <!-- Vue.js 2.5.16 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   </head>
   <body>
-    <header class="navbar col-md-12 bg-arduino header">
-      <a class="home-link" href="#">
-        <h1>Arduino Configurator</h1>
-      </a>
-      <a class="d-none d-md-block" href="https://www.arduino.cc/" target="_blank">
-        <img class="logo" src="images/arduino_logo.png">
-      </a>
-    </header>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 col-md-2 col-xl-1 bg-arduino sidebar">
-        <nav class="nav flex-column text-center">
-            <a class="sidebar-item" href="#timerMenu" data-toggle="collapse">Timer</a>
-      <div class="sub-menu collapse" id="timerMenu">
-        <a class="sub-menu-item" href="modules/timer/timeMeasure.html">Time Measure</a>
-          <a class="sub-menu-item" href="modules/timer/periodicInterruptGeneration.html">Periodic Interrupt Generation</a>
-        <a class="sub-menu-item" href="modules/timer/squareWaveGeneration.html">Square Wave Generation</a>
-        <a class="sub-menu-item" href="modules/timer/pulseWidthModulation.html">Pulse Width Modulation</a>
-      </div>
-            <a class="sidebar-item" href="#ADCMenu" data-toggle="collapse">ADC</a>
-      <div class="sub-menu collapse" id="ADCMenu">
-        <a class="sub-menu-item" href="#">Function #1</a>
-          <a class="sub-menu-item" href="#">Function #2</a>
-      </div>
-            <a class="sidebar-item" href="#moduleMenu1" data-toggle="collapse">Module #1</a>
-      <div class="sub-menu collapse" id="moduleMenu1">
-        <a class="sub-menu-item" href="#">Function #1</a>
-          <a class="sub-menu-item" href="#">Function #2</a>
-          <a class="sub-menu-item" href="#">Function #3</a>
-      </div>
-            <a class="sidebar-item" href="#moduleMenu2" data-toggle="collapse">Module #2</a>
-      <div class="sub-menu collapse" id="moduleMenu2">
-        <a class="sub-menu-item" href="#">Function #1</a>
-          <a class="sub-menu-item" href="#">Function #2</a>
-          <a class="sub-menu-item" href="#">Function #3</a>
-      </div>
-          </nav>
+    <div id="configurator-app">
+      <configurator-header></configurator-header>
+      <div class="container-fluid">
+        <div class="row">
+          <configurator-nav></configurator-nav>
+          <div class="col-12 offset-md-2 col-md-10 offset-xl-1 col-xl-11 content">
+            <div class="col-12 col-md-10">
+              <h2><span class="title-pre">Arduino Configurator</span> / <span class="title">Home</span></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+            </div>
+          </div>
         </div>
-    <div class="col-12 offset-md-2 col-md-10 offset-xl-1 col-xl-11 content">
-      <div class="col-12 col-md-10">
-        <h2><span class="title-pre">Arduino Configurator</span> / <span class="title">Home</span></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
       </div>
     </div>
-    </div>
-  </div>
-
   </body>
+  <script src="js/config-app.js"></script>
   <script src="js/scripts.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
