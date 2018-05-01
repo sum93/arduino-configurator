@@ -12,23 +12,60 @@ Vue.component('configurator-header', {
 Vue.component('configurator-nav', {
   template: '<div class="col-12 col-md-2 col-xl-1 bg-arduino sidebar">' +
               '<nav class="nav flex-column text-center">' +
-                '<a class="sidebar-item" href="#timerMenu" data-toggle="collapse">Timer</a>' +
-                '<div class="sub-menu collapse" id="timerMenu">' +
-                  '<a class="sub-menu-item" href="modules/timer/timeMeasure.html">Time Measure</a>' +
-                  '<a class="sub-menu-item" href="modules/timer/periodicInterruptGeneration.html">Periodic Interrupt Generation</a>' +
-                  '<a class="sub-menu-item" href="modules/timer/squareWaveGeneration.html">Square Wave Generation</a>' +
-                  '<a class="sub-menu-item" href="modules/timer/pulseWidthModulation.html">Pulse Width Modulation</a>' +
-                '</div>' +
-                '<a class="sidebar-item" href="#ADCMenu" data-toggle="collapse">ADC</a>' +
-                '<div class="sub-menu collapse" id="ADCMenu">' +
-                  '<a class="sub-menu-item" href="modules/adc/signalSampler.html">Signal Sampler</a>' +
-                  '<a class="sub-menu-item" href="#">Temperature Sensor</a>' +
-                  '<a class="sub-menu-item" href="#">Oversampling</a>' +
-                '</div>' +
+                '<template v-for="(module, key) in modules">' +
+                  '<a class="sidebar-item" v-bind:href="\'#\' + key" data-toggle="collapse">{{ module.name }}</a>' +
+                  '<div class="sub-menu collapse" v-bind:id="key">' +
+                    '<a v-for="application in module.applications" class="sub-menu-item" v-bind:href="application.link">{{ application.name }}</a>' +
+                  '</div>' +
+                '</template>' +
               '</nav>' +
-            '</div>'
+            '</div>',
+  props: ['modules'] 
 })
 
 new Vue({
-    el: '#configurator-app'
+    el: '#configurator-app',
+    data: {
+      // Structure of navigarion
+      'modules' : {
+        'timer': {
+          'name' : 'Timer',
+          'applications' : {
+            'timeMeasure' : {
+              'name' : 'Time Measure',
+              'link' : 'modules/timer/timeMeasure.html'
+            },
+            'periodicInterruptGeneration' : {
+              'name' : 'Periodic Interrupt Generation',
+              'link' : 'modules/timer/periodicInterruptGeneration.html'
+            },
+            'squareWaveGeneration' : {
+              'name' : 'Square Wave Generation',
+              'link' : 'modules/timer/squareWaveGeneration.html'
+            },
+            'pulseWidthModulation' : {
+              'name' : 'Pulse Width Modulation',
+              'link' : 'modules/timer/pulseWidthModulation.html'
+            }
+          }
+        },
+        'adc': {
+          'name' : 'ADC',
+          'applications' : {
+            'signalSampler' : {
+              'name' : 'Signal Sampler',
+              'link' : 'modules/adc/signalSampler.html'
+            },
+            'oversampling' : {
+              'name' : 'Oversampling',
+              'link' : '#'
+            },
+            'tempertureMeasure' : {
+              'name' : 'Temperature Measure',
+              'link' : '#'
+            }
+          }
+        }
+      }
+    }
   })
