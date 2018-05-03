@@ -26,7 +26,7 @@ Vue.component('configurator-nav', {
 new Vue({
     el: '#configurator-app',
     data: {
-      // Structure of navigarion
+      // Structure of navigation
       'modules' : {
         'timer': {
           'name' : 'Timer',

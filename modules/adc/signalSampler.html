@@ -37,9 +37,9 @@
                     </div>
                     <div class="col-8">
                       <select class="form-control" id="referenceVoltage">
-                        <option>Vcc - 5 V</option>
-                        <option>Internal - 1.1 V</option>
-                        <option>External</option>
+                        <option value="0">Vcc - 5 V</option>
+                        <option value="1">Internal - 1.1 V</option>
+                        <option value="2">External</option>
                       </select>
                     </div>
                   </div>
@@ -49,12 +49,12 @@
                     </div>
                     <div class="col-8">
                       <select class="form-control" id="inputSource">
-                        <option>ADC0</option>
-                        <option>ADC1</option>
-                        <option>ADC2</option>
-                        <option>ADC3</option>
-                        <option>ADC4</option>
-                        <option>ADC5</option>
+                        <option value="0">ADC0</option>
+                        <option value="1">ADC1</option>
+                        <option value="2">ADC2</option>
+                        <option value="3">ADC3</option>
+                        <option value="4">ADC4</option>
+                        <option value="5">ADC5</option>
                       </select>
                     </div>
                   </div>
@@ -68,17 +68,21 @@
                         <option disabled>Automatic (interrupt driven)</option>
                         <option value="1">Free running (on ADC conversion end)</option>
                         <option value="2">Analog comparator</option>
-                        <option value="3">External interrupt</option>
-                        <option value="4">Timer 1 - overflow</option>
+                        <option value="3">External interrupt 0</option>
+                        <option value="4">Timer 0 - compare match A</option>
+                        <option value="5">Timer 0 - overflow</option>
+                        <option value="6">Timer 1 - compare match B</option>
+                        <option value="7">Timer 1 - overflow</option>
+                        <option value="8">Timer 1 - capture event</option>
                       </select>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-4">
-                      <label class="label-right col-form-label" for="interrupt">Interrupt Handler:</label>
+                      <label class="label-right col-form-label" for="leftAdjusted">Left Adjusted:</label>
                     </div>
                     <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="interrupt">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="leftAdjusted">
                     </div>
                   </div>
                   <div id="triggerInterruptSetup"></div>
