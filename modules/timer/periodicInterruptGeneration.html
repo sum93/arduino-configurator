@@ -16,11 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   </head>
   <body>
-    <div id="configurator-app">
-      <configurator-header></configurator-header>
+    <div id="periodic-interrupt-generation">
+      <config-app-header></config-app-header>
       <div class="container-fluid">
         <div class="row">
-          <configurator-nav v-bind:modules="modules"></configurator-nav>
+          <config-app-nav></config-app-nav>
           <div class="col-12 offset-md-2 col-md-10 offset-xl-1 col-xl-11 content">
             <div class="row my-4">
               <div class="offset-1">
@@ -33,37 +33,27 @@
                 <form>
                   <div class="form-group row">
                     <div class="col-4">
-                      <label class="label-right col-form-label" for="domainSelector">Domain:</label>
+                      <label id="domainLabel" class="label-right col-form-label" for="domain">Domain:</label>
                     </div>
                     <div class="col-8">
-                      <select class="form-control" id="domainSelector" onchange="setDomain()">
-                        <option>Time</option>
-                        <option>Frequency</option>
+                      <select class="form-control" v-model.number="domain" id="domain">
+                        <option value="0">Time</option>
+                        <option value="1">Frequency</option>
                       </select>
                     </div>
                   </div>
                   <div id="time" class="form-group row">
                     <div class="col-4">
-                      <label id="domainSelectedLabel" class="label-right col-form-label" for="domainSelected">Period (us):</label>
+                      <label id="domainValueLabel" class="label-right col-form-label" v-if="domain == 0" for="domainValue">Period (us):</label>
+                      <label id="domainValueLabel" class="label-right col-form-label" v-if="domain == 1" for="domainValue" v-cloak>Frequency (Hz):</label>
                     </div>
                     <div class="col-8">
-                      <input type="number" class="form-control" id="domainSelected">
+                      <input type="number" class="form-control" v-model.number="domainValue" id="domainValue">
                     </div>
                   </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="getPeriodicEventCode();" class="btn btn-arduino col-12">Get your code!</button>
-                    </div>
-                  </div>
-                  <div class="row col-12 p-0 m-0">
-                    <label for="result"><b>Your Code:</b></label>
-                    <textarea class="form-control result-code" id="result" rows="10"></textarea>
-                  </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="copyCode();" class="btn btn-arduino col-12">Copy to clipboard!</button>
-                    </div>
-                  </div>
+
+                  <result-code v-bind:result-code="resultCode" v-bind:number-of-code-lines="numberOfCodeLines" v-bind:get-code="getCode"></result-code>
+
                 </form>
               </div>
               <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
@@ -78,8 +68,9 @@
       </div>
     </div>
   </body>
-  <script src="js/config-app.js"></script>
-  <script src="js/scripts.js"></script>
+  <script src="js/result-code.vue.js"></script>
+  <script src="js/config-app-global-components.vue.js"></script>
+  <script src="js/timer/periodic-interrupt-generation.vue.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

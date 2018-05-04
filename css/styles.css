@@ -74,6 +74,10 @@
   tab-size : 2;
 }
 
+.form-control:disabled, .form-control[readonly] {
+  background-color: #ffffff !important;
+}
+
 .home-link:link, .home-link:visited, .home-link:hover, .home-link:active{
   color: #ffffff;
 }
@@ -92,4 +96,8 @@
   .content {
 	margin-top: 94px;
   }
+}
+
+[v-cloak] {
+  display: none;
 }

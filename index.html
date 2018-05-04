@@ -15,11 +15,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   </head>
   <body>
-    <div id="configurator-app">
-      <configurator-header></configurator-header>
+    <div id="config-app">
+      <config-app-header></config-app-header>
       <div class="container-fluid">
         <div class="row">
-          <configurator-nav v-bind:modules="modules"></configurator-nav>
+          <config-app-nav></config-app-nav>
           <div class="col-12 offset-md-2 col-md-10 offset-xl-1 col-xl-11 content">
             <div class="col-12 col-md-10">
               <h2><span class="title-pre">Arduino Configurator</span> / <span class="title">Home</span></h2>
@@ -32,8 +32,8 @@
       </div>
     </div>
   </body>
+  <script src="js/config-app-global-components.vue.js"></script>
   <script src="js/config-app.js"></script>
-  <script src="js/scripts.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
