@@ -5,17 +5,9 @@ new Vue({
     domainValue : 0,
     resultCode  : ''
   },
-  computed: {
-    numberOfCodeLines: function () {
-      var lines = this.resultCode.split('\n').length;
-      if (lines == 1)
-        return 5;
-      return lines;
-    }
-  },
   methods: {
     getCode: function () {
-      // process input
+      // process inputs
       if (this.domain === 0)
         var period = this.domainValue;
       else

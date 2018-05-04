@@ -36,7 +36,7 @@
                       <label class="label-right col-form-label" for="frequency">Frequency (Hz):</label>
                     </div>
                     <div class="col-8">
-                      <input type="number" class="form-control" id="frequency">
+                      <input type="number" class="form-control" v-model.number="frequency" id="frequency">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -44,7 +44,7 @@
                       <label class="label-right col-form-label" for="offsetB">Output B's offset (°):</label>
                     </div>
                     <div class="col-8">
-                      <input type="number" class="form-control" id="offsetB">
+                      <input type="number" class="form-control" v-model.number="offsetB" id="offsetB">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -52,7 +52,7 @@
                       <label class="label-right col-form-label" for="activeA">Output A active:</label>
                     </div>
                     <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="activeA">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="activeA" id="activeA">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -60,23 +60,10 @@
                       <label class="label-right col-form-label" for="activeB">Output B active:</label>
                     </div>
                     <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="activeB">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="activeB" id="activeB">
                     </div>
                   </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="getClockGenerationCode();" class="btn btn-arduino col-12">Get your code!</button>
-                    </div>
-                  </div>
-                  <div class="row col-12 p-0 m-0">
-                    <label for="result"><b>Your Code:</b></label>
-                    <textarea class="form-control result-code" id="result" rows="10"></textarea>
-                  </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="copyCode();" class="btn btn-arduino col-12">Copy to clipboard!</button>
-                    </div>
-                  </div>
+                  <result-code v-bind:result-code="resultCode" v-bind:get-code="getCode"></result-code>
                 </form>
               </div>
               <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
@@ -91,9 +78,9 @@
       </div>
     </div>
   </body>
+  <script src="js/result-code.vue.js"></script>
   <script src="js/config-app-global-components.vue.js"></script>
   <script src="js/timer/square-wave-generation.vue.js"></script>
-  <script src="js/scripts.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

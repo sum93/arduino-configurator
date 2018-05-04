@@ -36,7 +36,7 @@
                       <label class="label-right col-form-label" for="usage">Usage:</label>
                     </div>
                     <div class="col-8">
-                      <select class="form-control" id="usage" onchange="setFrequencySelect()">
+                      <select class="form-control" id="usage" v-model.number="usage" v-on:change="setFrequency()">
                         <option value="0">Power Regulation / Retrification / DAC Applications</option>
                         <option value="1">Motor Control (phase correct)</option>
                         <option value="2">Motor Control (phase and frequency correct)</option>
@@ -48,41 +48,49 @@
                       <label class="label-right col-form-label" for="frequency">Frequency:</label>
                     </div>
                     <div id="frequencySelect" class="col-8">
-                      <select class="form-control" onchange="setCusmtomFrequency()" id="frequency">
-                        <option selected disabled>Choose a frequency!</option>
-                        <option disabled>8-bit mode:</option>
-                        <option value="0">62500 Hz</option>
-                        <option value="1">7812.5 Hz</option>
-                        <option value="2">976.56 Hz</option>
-                        <option value="3">122.07 Hz</option>
-                        <option value="4">15.26 Hz</option>
-                        <option disabled>9-bit mode:</option>
-                        <option value="5">31250 Hz</option>
-                        <option value="6">3906.25 Hz</option>
-                        <option value="7">488.28 Hz</option>
-                        <option value="8">61.04 Hz</option>
-                        <option value="9">7.63 Hz</option>
-                        <option disabled>10-bit mode:</option>
-                        <option value="10">15625 Hz</option>
-                        <option value="11">1953.13 Hz</option>
-                        <option value="12">244.14 Hz</option>
-                        <option value="13">30.52 Hz</option>
-                        <option value="14">3.81 Hz</option>
+                      <select class="form-control" v-model.number="frequency" id="frequency">
+                        <option v-if="usage != 2" disabled>8-bit mode:</option>
+                        <option v-if="usage != 2" value="0">62500 Hz</option>
+                        <option v-if="usage != 2" value="1">7812.5 Hz</option>
+                        <option v-if="usage != 2" value="2">976.56 Hz</option>
+                        <option v-if="usage != 2" value="3">122.07 Hz</option>
+                        <option v-if="usage != 2" value="4">15.26 Hz</option>
+                        <option v-if="usage != 2" disabled>9-bit mode:</option>
+                        <option v-if="usage != 2" value="5">31250 Hz</option>
+                        <option v-if="usage != 2" value="6">3906.25 Hz</option>
+                        <option v-if="usage != 2" value="7">488.28 Hz</option>
+                        <option v-if="usage != 2" value="8">61.04 Hz</option>
+                        <option v-if="usage != 2" value="9">7.63 Hz</option>
+                        <option v-if="usage != 2" disabled>10-bit mode:</option>
+                        <option v-if="usage != 2" value="10">15625 Hz</option>
+                        <option v-if="usage != 2" value="11">1953.13 Hz</option>
+                        <option v-if="usage != 2" value="12">244.14 Hz</option>
+                        <option v-if="usage != 2" value="13">30.52 Hz</option>
+                        <option v-if="usage != 2" value="14">3.81 Hz</option>
                         <option disabled>Custom:</option>
                         <option value="15">Using OCR1A - one pwm output, double buffered</option>
                         <option value="16">Using ICR1 - two pwm outputs, external event can set</option>
                       </select>
                     </div>
                   </div>
-                  <div id="customFrequencyForm"></div>
+                  <div v-cloak>
+                    <div v-if="frequency == 15 || frequency == 16" class="form-group row">
+                      <div class="col-4">
+                        <label class="label-right col-form-label" for="customFrequency">Custom frequency (Hz):</label>
+                      </div>
+                      <div class="col-8">
+                        <input type="number" class="form-control" v-model.number="customFrequency" id="customFrequency">
+                      </div>
+                    </div>
+                  </div>
                   <h5>Outputs:</h5>
-                  <div id="outputA">
+                  <div v-if="frequency != 15">
                     <div class="form-group row">
                       <div class="col-4">
                         <label class="label-right col-form-label" for="activeA">Active A:</label>
                       </div>
                       <div class="col-8 form-check">
-                        <input type="checkbox" class="form-check-input position-static label-right mt-3" id="activeA">
+                        <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="activeA" id="activeA">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -90,7 +98,7 @@
                         <label class="label-right col-form-label" for="invertedA">Inverted A:</label>
                       </div>
                       <div class="col-8 form-check">
-                        <input type="checkbox" class="form-check-input position-static label-right mt-3" id="invertedA">
+                        <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="invertedA" id="invertedA">
                       </div>
                     </div>
                   </div>
@@ -99,7 +107,7 @@
                       <label class="label-right col-form-label" for="activeB">Active B:</label>
                     </div>
                     <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="activeB">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="activeB" id="activeB">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -107,23 +115,12 @@
                       <label class="label-right col-form-label" for="invertedB">Inverted B:</label>
                     </div>
                     <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="invertedB">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="invertedB" id="invertedB">
                     </div>
                   </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="getPwmCode();" class="btn btn-arduino col-12">Get your code!</button>
-                    </div>
-                  </div>
-                  <div class="row col-12 p-0 m-0">
-                    <label for="result"><b>Your Code:</b></label>
-                    <textarea class="form-control result-code" id="result" rows="10"></textarea>
-                  </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="copyCode();" class="btn btn-arduino col-12">Copy to clipboard!</button>
-                    </div>
-                  </div>
+
+                  <result-code v-bind:result-code="resultCode" v-bind:get-code="getCode"></result-code>
+
                 </form>
               </div>
               <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
@@ -138,9 +135,9 @@
       </div>
     </div>
   </body>
+  <script src="js/result-code.vue.js"></script>
   <script src="js/config-app-global-components.vue.js"></script>
   <script src="js/timer/pulse-width-modulation.vue.js"></script>
-  <script src="js/scripts.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

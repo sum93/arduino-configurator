@@ -36,9 +36,9 @@
                       <label class="label-right col-form-label" for="mode">Mode:</label>
                     </div>
                     <div class="col-8">
-                      <select class="form-control" id="mode">
-                        <option>polling</option>
-                        <option>interrupt</option>
+                      <select class="form-control" v-model.number="mode" id="mode">
+                        <option value="0">Polling</option>
+                        <option value="1">Interrupt</option>
                       </select>
                     </div>
                   </div>
@@ -47,12 +47,12 @@
                       <label class="label-right col-form-label" for="resolution">Resolution:</label>
                     </div>
                     <div class="col-8">
-                      <select class="form-control" id="resolution">
-                        <option>0.0625 us</option>
-                        <option>0.5 us</option>
-                        <option>4 us</option>
-                        <option>16 us</option>
-                        <option>64 us</option>
+                      <select class="form-control" v-model.number="resolution" id="resolution">
+                        <option value="0">0.0625 us</option>
+                        <option value="1">0.5 us</option>
+                        <option value="2">4 us</option>
+                        <option value="3">16 us</option>
+                        <option value="4">64 us</option>
                       </select>
                     </div>
                   </div>
@@ -61,11 +61,11 @@
                       <label class="label-right col-form-label" for="edge">Edge Detection:</label>
                     </div>
                     <div class="col-8">
-                      <select class="form-control" id="edge">
-                        <option value="high">Up - Down (upper)</option>
-                        <option value="low">Down - Up (lower)</option>
-                        <option value="period_up">Up - Up (period)</option>
-                        <option value="period_down">Down - Down (period)</option>
+                      <select class="form-control" v-model.number="edge" id="edge">
+                        <option value="0">Positive then negative edge (high)</option>
+                        <option value="1">Negative then positive edge (low)</option>
+                        <option value="2">Positive edges (period)</option>
+                        <option value="3">Negative edges (period)</option>
                       </select>
                     </div>
                   </div>
@@ -74,17 +74,17 @@
                       <label class="label-right col-form-label" for="pin">Input Pin:</label>
                     </div>
                     <div class="col-8">
-                      <select class="form-control" id="pin">
+                      <select class="form-control" v-model.number="pin" id="pin">
                         <option disabled>Digital:</option>
-                        <option>ICP1</option>
+                        <option value="0">ICP1</option>
                         <option disabled>Analog:</option>
-                        <option>AIN1</option>
-                        <option>ADC0</option>
-                        <option>ADC1</option>
-                        <option>ADC2</option>
-                        <option>ADC3</option>
-                        <option>ADC4</option>
-                        <option>ADC5</option>
+                        <option value="1">AIN1</option>
+                        <option value="2">ADC0</option>
+                        <option value="3">ADC1</option>
+                        <option value="4">ADC2</option>
+                        <option value="5">ADC3</option>
+                        <option value="6">ADC4</option>
+                        <option value="7">ADC5</option>
                       </select>
                     </div>
                   </div>
@@ -93,23 +93,12 @@
                       <label class="label-right col-form-label" for="software">Software Extension:</label>
                     </div>
                     <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" id="software">
+                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="software" id="software">
                     </div>
                   </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="getTimeMeasureCode();" class="btn btn-arduino col-12">Get your code!</button>
-                    </div>
-                  </div>
-                  <div class="row col-12 p-0 m-0">
-                    <label for="result"><b>Your Code:</b></label>
-                    <textarea class="form-control result-code" id="result" rows="10"></textarea>
-                  </div>
-                  <div class="form-group row my-3">
-                    <div class="col-12">
-                      <button type="button" onclick="copyCode();" class="btn btn-arduino col-12">Copy to clipboard!</button>
-                    </div>
-                  </div>
+
+                  <result-code v-bind:result-code="resultCode" v-bind:get-code="getCode"></result-code>
+
                 </form>
               </div>
               <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
@@ -125,9 +114,9 @@
       </div>
     </div>
   </body>
+  <script src="js/result-code.vue.js"></script>
   <script src="js/config-app-global-components.vue.js"></script>
   <script src="js/timer/time-measure.vue.js"></script>
-  <script src="js/scripts.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

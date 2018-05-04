@@ -25,8 +25,8 @@ Vue.component('config-app-nav', {
                 <a class="sidebar-item" href="#ADCMenu" data-toggle="collapse">ADC</a>
                 <div class="sub-menu collapse" id="ADCMenu">
                   <a class="sub-menu-item" href="modules/adc/signalSampler.html">Signal Sampler</a>
-                  <a class="sub-menu-item" href="#">Temperature Sensor</a>
-                  <a class="sub-menu-item" href="#">Oversampling</a>
+                  <!-- <a class="sub-menu-item" href="#">Temperature Sensor</a> -->
+                  <!-- <a class="sub-menu-item" href="#">Oversampling</a> -->
                 </div>
               </nav>
             </div>

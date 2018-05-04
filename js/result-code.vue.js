@@ -1,9 +1,16 @@
 Vue.component('result-code', {
   props: [
     'resultCode',
-    'numberOfCodeLines',
     'getCode'
   ],
+  computed: {
+    numberOfCodeLines: function () {
+      var lines = this.resultCode.split('\n').length;
+      if (lines == 1)
+        return 5;
+      return lines;
+    }
+  },
   template: `
     <div>
       <div class="form-group row my-3">
