@@ -21,23 +21,20 @@ new Vue({
       // code generation
       var resultCodeTmp = '#include "Arduino.h"\n';
 
-      if (mode == 0)
+      if (mode == 0) {
         resultCodeTmp +=
           '\nuint16_t startTimestamp;\n' +
           'uint16_t endTimestamp;\n';
-
-      if (mode == 1) {
+        if (software)
+          resultCodeTmp += 'uint16_t overflowCounter = 0;\n';
+      } else {
         resultCodeTmp +=
           '\nvolatile uint16_t startTimestamp;\n' +
           'volatile uint16_t endTimestamp;\n' +
           'volatile boolean newData;\n';
 
         if (software)
-          resultCodeTmp +=
-            'volatile uint16_t overflowCounter = 0;\n' + 
-            'uint32_t result;\n';
-        else
-          resultCodeTmp += 'uint16_t result;\n';
+          resultCodeTmp += 'volatile uint16_t overflowCounter = 0;\n';
       }
 
       resultCodeTmp +=
@@ -48,8 +45,9 @@ new Vue({
         resultCodeTmp += '\n\tpinMode(8, INPUT);\n'
       else
         resultCodeTmp +=
-          '\n\tACSR  = _BV(ACBG) | _BV(ACIC);\n' +
-          '\tTIFR1 = _BV(ICF1);\n';
+          '\n\tACSR = _BV(ACBG) | _BV(ACIC);\n' +
+          '\t// 70 us delay for Bandgap to initialize\n' +
+          '\tdelayMicroseconds(70);\n';
 
       if (pin == 1)
         resultCodeTmp += '\tpinMode(7, INPUT);\n';
@@ -59,17 +57,27 @@ new Vue({
           '\tADCSRA &= ~_BV(ADEN);\n' +
           '\tADCSRB |=  _BV(ACME);\n';
         if (pin == 2)
-          resultCodeTmp += '\n';
+          resultCodeTmp += '\tpinMode(A0, INPUT);\n';
         else if (pin == 3)
-          resultCodeTmp += '\tADMUX = _BV(MUX0);\n';
+          resultCodeTmp +=
+            '\tADMUX = _BV(MUX0);\n' +
+            '\tpinMode(A1, INPUT);\n';
         else if (pin == 4)
-          resultCodeTmp += '\tADMUX = _BV(MUX1);\n';
+          resultCodeTmp +=
+            '\tADMUX = _BV(MUX1);\n' +
+            '\tpinMode(A2, INPUT);\n';
         else if (pin == 5)
-          resultCodeTmp += '\tADMUX = _BV(MUX1) | _BV(MUX0);\n';
+          resultCodeTmp +=
+            '\tADMUX = _BV(MUX1) | _BV(MUX0);\n' +
+            '\tpinMode(A3, INPUT);\n';
         else if (pin == 6)
-          resultCodeTmp += '\tADMUX = _BV(MUX2);\n';
+          resultCodeTmp +=
+            '\tADMUX = _BV(MUX2);\n' +
+            '\tpinMode(A4, INPUT);\n';
         else
-          resultCodeTmp += '\tADMUX = _BV(MUX2) | _BV(MUX0)\n';
+          resultCodeTmp +=
+            '\tADMUX = _BV(MUX2) | _BV(MUX0)\n' +
+            '\tpinMode(A5, INPUT);\n';
       }
         
       resultCodeTmp +=
@@ -93,12 +101,9 @@ new Vue({
       resultCodeTmp += '\tTCCR1C = 0x00;\n';
 
       if (mode == 1) {
-        if (pin == 0)
-          resultCodeTmp +=
-            '\n\tTIFR1 |= _BV(ICF1);\n' +
-            '\tTIMSK1 = _BV(ICIE1);\n';
-        else
-          resultCodeTmp += '\n\tTIMSK1 = _BV(ICIE1);\n';
+        resultCodeTmp +=
+          '\n\tTIFR1 |= _BV(ICF1);\n' +
+          '\tTIMSK1 = _BV(ICIE1);\n';
       }
 
       resultCodeTmp +=
@@ -107,28 +112,10 @@ new Vue({
         '\nvoid loop() {\n';
 
       if (mode == 0)
-        resultCodeTmp += '\tmeasureTime();\n';
+        resultCodeTmp += '\t// measureTime();\n';
 
-      if (mode == 1) {
-        resultCodeTmp +=
-          '\tif(newData) {\n' +
-          '\t\tnewData = false;\n';
-
-        if (software)
-          resultCodeTmp +=
-            '\n\t\tif (startTimestamp < endTimestamp)\n' +
-            '\t\t\tresult = ((uint32_t)overflowCounter << 16) + (endTimestamp - startTimestamp);\n' +
-            '\t\telse\n' +
-            '\t\t\tresult = ((uint32_t)overflowCounter << 16) + (65536 - (startTimestamp - endTimestamp));\n';
-        else 
-          resultCodeTmp +=
-            '\n\t\tif (startTimestamp < endTimestamp)\n' +
-            '\t\t\tresult = endTimestamp - startTimestamp;\n' +
-            '\t\telse\n' +
-            '\t\t\tresult = 65536 - (startTimestamp - endTimestamp);\n';
-            
-        resultCodeTmp += '\t}\n';
-      }
+      if (mode == 1)
+        resultCodeTmp += '\t// calculateTime()\n';
 
       resultCodeTmp += '}\n';
 
@@ -195,7 +182,30 @@ new Vue({
       }
 
       if (mode == 1) {
+        resultCodeTmp += 
+          '\n// this function returns the measured time,\n' +
+          '// if a measure is completed, else returns 0\n' +
+          'uint32_t calculateTime() {\n' +
+          '\tif(newData) {\n' +
+          '\t\tnewData = false;\n';
+
+        if (software)
+          resultCodeTmp +=
+            '\n\t\tif (startTimestamp < endTimestamp)\n' +
+            '\t\t\treturn ((uint32_t)overflowCounter << 16) + (endTimestamp - startTimestamp);\n' +
+            '\t\telse\n' +
+            '\t\t\treturn ((uint32_t)overflowCounter << 16) + (65536 - (startTimestamp - endTimestamp));\n';
+        else 
+          resultCodeTmp +=
+            '\n\t\tif (startTimestamp < endTimestamp)\n' +
+            '\t\t\treturn endTimestamp - startTimestamp;\n' +
+            '\t\telse\n' +
+            '\t\t\treturn 65536 - (startTimestamp - endTimestamp);\n';
+
         resultCodeTmp +=
+          '\t} else\n'+
+          '\t\treturn 0;\n'+
+          '}\n' +
           '\nISR(TIMER1_CAPT_vect) {\n' +
           '\tTIFR1 |= _BV(ICF1);\n' +
           '\n\tstatic boolean state;\n' +

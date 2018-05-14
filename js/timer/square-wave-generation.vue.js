@@ -51,8 +51,19 @@ new Vue({
       var resultCode =
         '#include "Arduino.h"\n' +
         '\nvoid setup() {\n' +
-        '\tcli();\n' +
-        '\n\tTCCR1A = ';
+        '\tcli();\n';
+
+      if (activeA || activeB){
+        if (activeA)
+          resultCode += '\n\tpinMode(9, OUTPUT);';
+        if (activeB)
+          resultCode += '\n\tpinMode(10, OUTPUT);';
+
+        resultCode += '\n';
+      }
+
+        
+      resultCode += '\n\tTCCR1A = ';
 
       if (!activeA && !activeB)
         resultCode += '0x00;\n';

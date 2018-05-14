@@ -30,18 +30,16 @@ new Vue({
       //additional inputs if timer involved, calculations
       else if (triggerSource == 4 || triggerSource == 5 || triggerSource == 6 || triggerSource == 7) {
         // input process
-        if (domain == 0)
+        if (this.domain == 0)
           var period = this.domainValue;
         else
-          var period = this.domainValue * 1000000;
+          var period = 1 / this.domainValue * 1000000;
 
         // Timer 0
         if (triggerSource == 4 || triggerSource == 5) {
           // calculate optimal resolution
           var resolution = 0;
-          if (period <= 256 * 0.0625)
-            resolution = 0.0625;
-          else if (period <= 256 * 0.5)
+          if (period <= 256 * 0.5)
             resolution = 0.5;
           else if (period <= 256 * 4)
             resolution = 4;
@@ -53,7 +51,7 @@ new Vue({
           // calculate register value
           var timerRegisterValue = Math.round(period / resolution) - 1;
 
-          if (timerRegisterValue > 255) {
+          if  (timerRegisterValue > 255 || (timerRegisterValue * resolution < 104)) {
             this.resultCode = '// Frequency or period is out of range!\n';
             return;
           }
@@ -76,7 +74,7 @@ new Vue({
           // calculate register value
           var timerRegisterValue = Math.round(period / resolution) - 1;
 
-          if (timerRegisterValue > 65535) {
+          if (timerRegisterValue > 65535 || (timerRegisterValue * resolution < 104)) {
             this.resultCode = '// Frequency or period is out of range!\n';
             return;
           }

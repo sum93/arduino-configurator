@@ -142,15 +142,23 @@ new Vue({
       resultCode += '\n\t// Outputs\n';
 
       if (frequency != 15) {
-        if (activeA && !invertedA)
-          resultCode += '\tTCCR1A |= _BV(COM1A1);\n';
-        else if (activeA && invertedA)
-          resultCode += '\tTCCR1A |= _BV(COM1A1) | _BV(COM1A0);\n';
+        if (activeA) {
+          resultCode += '\tpinMode(9, OUTPUT);\n';
+
+          if (invertedA)
+            resultCode += '\tTCCR1A |= _BV(COM1A1) | _BV(COM1A0);\n';
+          else
+            resultCode += '\tTCCR1A |= _BV(COM1A1);\n';
+        }
       }
-      if (activeB && !invertedB)
-        resultCode += '\tTCCR1B |= _BV(COM1B1);\n';
-      if (activeB && invertedB)
-        resultCode += '\tTCCR1B |= _BV(COM1B1) | _BV(COM1B0);\n';
+      if (activeB) {
+        resultCode += '\tpinMode(10, OUTPUT);\n';
+
+        if (activeB && !invertedB)
+          resultCode += '\tTCCR1B |= _BV(COM1B1);\n';
+        if (activeB && invertedB)
+          resultCode += '\tTCCR1B |= _BV(COM1B1) | _BV(COM1B0);\n';
+      }
 
       resultCode += '\n\tTCCR1C = 0x00;\n';
 
