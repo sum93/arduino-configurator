@@ -20,7 +20,7 @@ Vue.component('result-code', {
       </div>
       <div class="row col-12 p-0 m-0">
         <label for="result"><b>Your Code:</b></label>
-        <textarea class="form-control result-code" v-model="resultCode" id="result" v-bind:rows="numberOfCodeLines" readonly></textarea>
+        <textarea class="form-control result-code" v-bind:value="resultCode" id="result" v-bind:rows="numberOfCodeLines"></textarea>
       </div>
       <div class="form-group row my-3">
         <div class="col-12">

@@ -1,17 +1,52 @@
+Vue.component('input-field', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label id="domainLabel" class="label-right col-form-label" for="domain">Domain:</label>
+        </div>
+        <div class="col-8">
+          <select class="form-control" v-model.number="inputData.domain" id="domain">
+            <option value="0">Time</option>
+            <option value="1">Frequency</option>
+          </select>
+        </div>
+      </div>
+      <div id="time" class="form-group row">
+        <div class="col-4">
+          <label id="domainValueLabel" class="label-right col-form-label" v-if="inputData.domain == 0" for="domainValue">Period (us):</label>
+          <label id="domainValueLabel" class="label-right col-form-label" v-if="inputData.domain == 1" for="domainValue" v-cloak>Frequency (Hz):</label>
+        </div>
+        <div class="col-8">
+          <input type="number" class="form-control" v-model.number="inputData.domainValue" id="domainValue">
+        </div>
+      </div>
+    </div>
+  `
+});
+
 new Vue({
   el: '#periodic-interrupt-generation',
   data: {
-    domain      : 0,
-    domainValue : 0,
+    inputData   : {
+      domain      : 0,
+      domainValue : 0
+    },
     resultCode  : ''
   },
   methods: {
     getCode: function () {
+      var domain = this.inputData.domain;
+      var domainValue = this.inputData.domainValue;
+
       // process inputs
-      if (this.domain === 0)
-        var period = this.domainValue;
+      if (domain === 0)
+        var period = domainValue;
       else
-        var period = 1 / this.domainValue * 1000000;
+        var period = 1 / domainValue * 1000000;
 
       // calculates optimal resolution, and decides whether software extension needed
       var software = false;

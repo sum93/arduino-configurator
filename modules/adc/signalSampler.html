@@ -31,146 +31,17 @@
               <div class="col-md-6">
                 <h4>Set Up</h4>
                 <form>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="referenceVoltage">Reference Voltage:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model="referenceVoltage" id="referenceVoltage">
-                        <option value="0">Vcc - 5 V</option>
-                        <option value="1">Internal - 1.1 V</option>
-                        <option value="2">External</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="inputSource">Input Source:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model="inputSource" id="inputSource">
-                        <option value="0">ADC0</option>
-                        <option value="1">ADC1</option>
-                        <option value="2">ADC2</option>
-                        <option value="3">ADC3</option>
-                        <option value="4">ADC4</option>
-                        <option value="5">ADC5</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="triggerSource">Trigger Source:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model="triggerSource" id="triggerSource">
-                        <option value="0">Manual</option>
-                        <option disabled>Automatic (interrupt driven)</option>
-                        <option value="1">Free running (on ADC conversion end)</option>
-                        <option value="2">Analog comparator</option>
-                        <option value="3">External interrupt 0</option>
-                        <option value="4">Timer 0 - compare match A</option>
-                        <option value="5">Timer 0 - overflow</option>
-                        <option value="6">Timer 1 - compare match B</option>
-                        <option value="7">Timer 1 - overflow</option>
-                        <option value="8">Timer 1 - capture event</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="leftAdjusted">Left Adjusted:</label>
-                    </div>
-                    <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="leftAdjusted" id="leftAdjusted">
-                    </div>
-                  </div>
-                  <div v-if="triggerSource == 2" v-cloak>
-                    <h5 class="col-12">Comparator setup:</h5>
-                    <div class="form-group row">
-                      <div class="col-4">
-                          <label class="label-right col-form-label" for="comparatorInterruptMode">Interrupt Mode:</label>
-                        </div>
-                        <div class="col-8">
-                          <select class="form-control" v-model="comparatorInterruptMode" id="comparatorInterruptMode">
-                            <option value="0">Toggle</option>
-                            <option value="1">Falling edge</option>
-                            <option value="2">Rising edge</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-4">
-                        <label class="label-right col-form-label" for="comparatorBandgap">Bandgap:</label>
-                      </div>
-                      <div class="col-8 form-check">
-                        <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="comparatorBandgap" id="comparatorBandgap">
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="triggerSource == 4 || triggerSource == 5 || triggerSource == 6 || triggerSource == 7" v-cloak>
-                    <h5 v-if="triggerSource == 4 || triggerSource == 5" class="col-12">Timer 0 setup:</h5>
-                    <h5 v-if="triggerSource == 6 || triggerSource == 7" class="col-12">Timer 1 setup:</h5>
-                    <div class="form-group row">
-                      <div class="col-4">
-                        <label class="label-right col-form-label" for="domain">Domain:</label>
-                      </div>
-                      <div class="col-8">
-                        <select class="form-control" v-model="domain" id="domain">
-                          <option value="0">Time</option>
-                          <option value="1">Frequency</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div id="time" class="form-group row">
-                      <div class="col-4">
-                        <label class="label-right col-form-label" v-if="domain == 0" for="domainValue">Period (us):</label>
-                        <label class="label-right col-form-label" v-if="domain == 1" for="domainValue">Frequency (Hz):</label>
-                      </div>
-                      <div class="col-8">
-                        <input type="number" class="form-control" v-model="domainValue" id="domainValue">
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="triggerSource == 8" v-cloak>
-                    <h5 class="col-12">Timer 1 setup:</h5>
-                    <div class="form-group row">
-                      <div class="col-4">
-                        <label class="label-right col-form-label" for="resolution">Resolution:</label>
-                      </div>
-                      <div class="col-8">
-                        <select class="form-control" v-model="resolution" id="resolution">
-                          <option value="0">0.0625 us</option>
-                          <option value="1">0.5 us</option>
-                          <option value="2">4 us</option>
-                          <option value="3">16 us</option>
-                          <option value="4">64 us</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-4">
-                        <label class="label-right col-form-label" for="inputCapture">Capture on rising edge:</label>
-                      </div>
-                      <div class="col-8 form-check">
-                        <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="inputCapture" id="inputCapture">
-                      </div>
-                    </div>
-                  </div>
+                  <input-field v-bind:input-data="inputData"></input-field>
                   <result-code v-bind:result-code="resultCode" v-bind:get-code="getCode"></result-code>
                 </form>
               </div>
-              <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
-                <h4 class="title">Additional Information</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-              </div>
+              <information-boxes v-bind:input-data="inputData"></information-boxes>
             </div>
           </div>
         </div>
       </div>
-    </div><script src="js/result-code.vue.js"></script>
+    </div>
+    <script src="js/result-code.vue.js"></script>
     <script src="js/config-app-global-components.vue.js"></script>
     <script src="js/adc/signal-sampler.vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

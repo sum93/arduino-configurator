@@ -48,6 +48,11 @@
   color: #7fcbcd;
 }
 
+.info-title {
+  padding-top: 10px;
+  color: #005c5f;
+}
+
 .label-right {
   float: right;
 }
@@ -72,10 +77,6 @@
   -moz-tab-size : 2;
   -o-tab-size : 2;
   tab-size : 2;
-}
-
-.form-control:disabled, .form-control[readonly] {
-  background-color: #ffffff !important;
 }
 
 .home-link:link, .home-link:visited, .home-link:hover, .home-link:active{

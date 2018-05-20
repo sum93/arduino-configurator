@@ -50,26 +50,26 @@
                     <div id="frequencySelect" class="col-8">
                       <select class="form-control" v-model.number="frequency" id="frequency">
                         <option v-if="usage != 2" disabled>8-bit mode:</option>
-                        <option v-if="usage != 2" value="0">62500 Hz</option>
-                        <option v-if="usage != 2" value="1">7812.5 Hz</option>
-                        <option v-if="usage != 2" value="2">976.56 Hz</option>
-                        <option v-if="usage != 2" value="3">122.07 Hz</option>
-                        <option v-if="usage != 2" value="4">15.26 Hz</option>
+                        <option v-if="usage != 2" value="0">- 62500 Hz</option>
+                        <option v-if="usage != 2" value="1">- 7812.5 Hz</option>
+                        <option v-if="usage != 2" value="2">- 976.56 Hz</option>
+                        <option v-if="usage != 2" value="3">- 122.07 Hz</option>
+                        <option v-if="usage != 2" value="4">- 15.26 Hz</option>
                         <option v-if="usage != 2" disabled>9-bit mode:</option>
-                        <option v-if="usage != 2" value="5">31250 Hz</option>
-                        <option v-if="usage != 2" value="6">3906.25 Hz</option>
-                        <option v-if="usage != 2" value="7">488.28 Hz</option>
-                        <option v-if="usage != 2" value="8">61.04 Hz</option>
-                        <option v-if="usage != 2" value="9">7.63 Hz</option>
+                        <option v-if="usage != 2" value="5">- 31250 Hz</option>
+                        <option v-if="usage != 2" value="6">- 3906.25 Hz</option>
+                        <option v-if="usage != 2" value="7">- 488.28 Hz</option>
+                        <option v-if="usage != 2" value="8">- 61.04 Hz</option>
+                        <option v-if="usage != 2" value="9">- 7.63 Hz</option>
                         <option v-if="usage != 2" disabled>10-bit mode:</option>
-                        <option v-if="usage != 2" value="10">15625 Hz</option>
-                        <option v-if="usage != 2" value="11">1953.13 Hz</option>
-                        <option v-if="usage != 2" value="12">244.14 Hz</option>
-                        <option v-if="usage != 2" value="13">30.52 Hz</option>
-                        <option v-if="usage != 2" value="14">3.81 Hz</option>
+                        <option v-if="usage != 2" value="10">- 15625 Hz</option>
+                        <option v-if="usage != 2" value="11">- 1953.13 Hz</option>
+                        <option v-if="usage != 2" value="12">- 244.14 Hz</option>
+                        <option v-if="usage != 2" value="13">- 30.52 Hz</option>
+                        <option v-if="usage != 2" value="14">- 3.81 Hz</option>
                         <option disabled>Custom:</option>
-                        <option value="15">Using OCR1A - one pwm output, double buffered</option>
-                        <option value="16">Using ICR1 - two pwm outputs, external event can set</option>
+                        <option value="15">- Using OCR1A</option>
+                        <option value="16">- Using ICR1</option>
                       </select>
                     </div>
                   </div>
@@ -123,11 +123,15 @@
 
                 </form>
               </div>
-              <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
-                <h4>Additional Information</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
+              <div class="col-md-6 mt-4 mt-md-0" v-cloak>
+                <h4>Additional Information:</h4>
+                <div class="col-12 information mb-3 py-4">
+                  <h5 class="title">Frequency:</h5>
+                  <p v-if="frequency != 15 && frequency != 16">Preset frequencies: try to use one of these, since they have the most functionality. </p>
+                  <p v-if="frequency == 15">OCR1A - this allows you to achive higher PWM resolution and you can set custom frequencies, but revokes the ability to use the OC1A output.</p>
+                  <p v-if="frequency == 16">ICR1 - allow you to set custom frequencies and achive higher PWM resoulution, but since the register is not double buffered you can't load low values in it, otherwise it would miss it.</p>
+                  <p>You can read a lot more about PWM modes in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 20.12. section.</p>
+                </div>
               </div>
             </div>
           </div>
