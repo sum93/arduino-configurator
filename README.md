@@ -15,4 +15,4 @@ This web application helps you configure your Arduino (Atmel ATmega328p) for som
   * Oversampling (canceled, since it not provides better resoultion just an avarage)
 
 ## TODOS:
-* Provide information instead of samlpe text.
+* Testing
