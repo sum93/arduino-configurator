@@ -6,7 +6,10 @@ Vue.component('information-boxes', {
   template: `
     <div class="col-md-6 mt-4 mt-md-0" v-cloak>
       <h4>Additional Information:</h4>
-      <div class="col-12 information py-2">
+      <div class="col-12 information pb-2 pt-4">
+        <p>
+          Some info about the functonalities.
+        </p>
         <h5 class="info-title">Reference Voltage:</h5>
         <p>
           <span v-if="inputData.referenceVoltage == 0">Vcc - supply voltage: uses the supply voltage as reference which is 5 V.<br/></span>
@@ -37,7 +40,7 @@ Vue.component('information-boxes', {
         <p>
           <span v-if="inputData.leftAdjusted">Left: using this is easier to use the ADC in 8 bit mode, because you only have to read the high byte of the resutl.<br/></span>
           <span v-if="!inputData.leftAdjusted">Right: use this if you want a 10 bit result.<br/></span>
-          <span>You can read more about lowering the resoultion in the <a v-bind:href="datasheet(305)" target="_blank">datasheets</a>.</span>
+          <span>You can read more about lowering the resoultion <a v-bind:href="datasheet(305)" target="_blank">here</a>.</span>
         </p>
       </div>
     </div>

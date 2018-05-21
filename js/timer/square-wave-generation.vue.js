@@ -1,21 +1,93 @@
+Vue.component('input-field', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="frequency">Frequency (Hz):</label>
+        </div>
+        <div class="col-8">
+          <input type="number" class="form-control" v-model.number="inputData.frequency" id="frequency">
+        </div>
+      </div>
+      <div class="form-group row" v-if="inputData.activeB">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="offsetB">Output B's offset (°):</label>
+        </div>
+        <div class="col-8">
+          <input type="number" class="form-control" v-model.number="inputData.offsetB" id="offsetB">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="activeA">Output A active:</label>
+        </div>
+        <div class="col-8 form-check">
+          <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="inputData.activeA" id="activeA">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="activeB">Output B active:</label>
+        </div>
+        <div class="col-8 form-check">
+          <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="inputData.activeB" id="activeB">
+        </div>
+      </div>
+    </div>
+  `
+})
+
+Vue.component('information-boxes', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
+      <h4>Additional Information:</h4>
+      <div class="col-12 information pb-2 pt-4">
+        <p>
+          Some info about the functonalities.<br/>
+          Read more <a v-bind:href="datasheet(0)" target="_blank">here</a>.
+        </p>
+        <div v-if="inputData.activeB">
+          <h5 class="title">Output B's offset:</h5>
+          <p>
+            Output b offset. yes.
+          </p>
+        </div>
+      </div>
+    </div>
+  `,
+  methods: {
+    datasheet: function (pageNumber){
+      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
+    }
+  }
+})
+
 new Vue({
   el: '#square-wave-generation',
   data: {
-    frequency: 0,
-    offsetB  : 0,
-    activeA  : false,
-    activeB  : false,
-    resultCode  : ''
+    inputData: {
+      frequency: 0,
+      offsetB  : 0,
+      activeA  : false,
+      activeB  : false
+    },
+    resultCode: ''
   },
   methods: {
     getCode: function () {
       // inputs
-      var frequency = this.frequency;
-      var offsetB   = this.offsetB;
-      var activeA   = this.activeA;
-      var activeB   = this.activeB;
+      var frequency = this.inputData.frequency;
+      var offsetB   = this.inputData.offsetB;
+      var activeA   = this.inputData.activeA;
+      var activeB   = this.inputData.activeB;
 
-      if(offsetB > 180 || offsetB < 0) {
+      if(activeB == 1 && (offsetB > 180 || offsetB < 0)) {
         this.resultCode = '// Offset is out of range!\n';
         return;
       }

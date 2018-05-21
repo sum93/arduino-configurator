@@ -8,14 +8,11 @@ This web application helps you configure your Arduino (Atmel ATmega328p) for som
   * Square Wave Generator
   * Pulse Width Modulation (PWM)
 * ADC:
-  * Signal Sampler
+  * Signal Sampler with temperature measure
 
 ## Planned applications to be implemented:
 * Analog-Digital Converter
-  * Oversampling (for higher resolution) ???
-  * Temperature Sensor (calibration ???)
+  * Oversampling (canceled, since it not provides better resoultion just an avarage)
 
 ## TODOS:
 * Provide information instead of samlpe text.
-* Create components for forms.
-* Create components for information.

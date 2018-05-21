@@ -1,33 +1,164 @@
+Vue.component('information-boxes', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
+      <h4>Additional Information:</h4>
+      <div class="col-12 information pb-2 pt-4">
+        <p>
+          Some info about the functonalities.
+        </p>
+        <h5 class="title">Frequency:</h5>
+        <p>
+          <span v-if="inputData.frequency != 15 && inputData.frequency != 16">Preset frequencies: try to use one of these, since they have the most functionality.<br/></span>
+          <span v-if="inputData.frequency == 15">OCR1A - this allows you to achive higher PWM resolution and you can set custom frequencies, but revokes the ability to use the OC1A output.<br/></span>
+          <span v-if="inputData.frequency == 16">ICR1 - allow you to set custom frequencies and achive higher PWM resoulution, but since the register is not double buffered you can't load low values in it, otherwise it would miss it.<br/></span>
+          <span>You can read a lot more about PWM modes <a v-bind:href="datasheet(160)" target="_blank">here</a>.</span>
+        </p>
+      </div>
+    </div>
+  `,
+  methods: {
+    datasheet: function (pageNumber){
+      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
+    }
+  }
+})
+
+Vue.component('input-field', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="usage">Usage:</label>
+        </div>
+        <div class="col-8">
+          <select class="form-control" id="usage" v-model.number="inputData.usage" v-on:change="setFrequency()">
+            <option value="0">Power Regulation / Retrification / DAC Applications</option>
+            <option value="1">Motor Control (phase correct)</option>
+            <option value="2">Motor Control (phase and frequency correct)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="frequency">Frequency:</label>
+        </div>
+        <div id="frequencySelect" class="col-8">
+          <select class="form-control" v-model.number="inputData.frequency" id="frequency">
+            <option v-if="inputData.usage != 2" disabled>8-bit mode:</option>
+            <option v-if="inputData.usage != 2" value="0">- 62500 Hz</option>
+            <option v-if="inputData.usage != 2" value="1">- 7812.5 Hz</option>
+            <option v-if="inputData.usage != 2" value="2">- 976.56 Hz</option>
+            <option v-if="inputData.usage != 2" value="3">- 122.07 Hz</option>
+            <option v-if="inputData.usage != 2" value="4">- 15.26 Hz</option>
+            <option v-if="inputData.usage != 2" disabled>9-bit mode:</option>
+            <option v-if="inputData.usage != 2" value="5">- 31250 Hz</option>
+            <option v-if="inputData.usage != 2" value="6">- 3906.25 Hz</option>
+            <option v-if="inputData.usage != 2" value="7">- 488.28 Hz</option>
+            <option v-if="inputData.usage != 2" value="8">- 61.04 Hz</option>
+            <option v-if="inputData.usage != 2" value="9">- 7.63 Hz</option>
+            <option v-if="inputData.usage != 2" disabled>10-bit mode:</option>
+            <option v-if="inputData.usage != 2" value="10">- 15625 Hz</option>
+            <option v-if="inputData.usage != 2" value="11">- 1953.13 Hz</option>
+            <option v-if="inputData.usage != 2" value="12">- 244.14 Hz</option>
+            <option v-if="inputData.usage != 2" value="13">- 30.52 Hz</option>
+            <option v-if="inputData.usage != 2" value="14">- 3.81 Hz</option>
+            <option disabled>Custom:</option>
+            <option value="15">- Using OCR1A</option>
+            <option value="16">- Using ICR1</option>
+          </select>
+        </div>
+      </div>
+      <div v-cloak>
+        <div v-if="inputData.frequency == 15 || inputData.frequency == 16" class="form-group row">
+          <div class="col-4">
+            <label class="label-right col-form-label" for="customFrequency">Custom frequency (Hz):</label>
+          </div>
+          <div class="col-8">
+            <input type="number" class="form-control" v-model.number="inputData.customFrequency" id="customFrequency">
+          </div>
+        </div>
+      </div>
+      <h5>Outputs:</h5>
+      <div v-if="inputData.frequency != 15">
+        <div class="form-group row">
+          <div class="col-4">
+            <label class="label-right col-form-label" for="activeA">Active A:</label>
+          </div>
+          <div class="col-8 form-check">
+            <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="inputData.activeA" id="activeA">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-4">
+            <label class="label-right col-form-label" for="invertedA">Inverted A:</label>
+          </div>
+          <div class="col-8 form-check">
+            <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="inputData.invertedA" id="invertedA">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="activeB">Active B:</label>
+        </div>
+        <div class="col-8 form-check">
+          <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="inputData.activeB" id="activeB">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label class="label-right col-form-label" for="invertedB">Inverted B:</label>
+        </div>
+        <div class="col-8 form-check">
+          <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model.number="inputData.invertedB" id="invertedB">
+        </div>
+      </div>
+    </div>
+  `,
+  setFrequency: function () {
+    if (this.inputData.usage == 2)
+      this.inputData.frequency = 15;
+  }
+})
+
 new Vue({
   el: '#pulse-width-modulation',
   data: {
-    usage          : 0,
-    frequency      : 0,
-    customFrequency: 0,
-    activeA        : false,
-    invertedA      : false,
-    activeB        : false,
-    invertedB      : false,
+    inputData: {
+      usage          : 0,
+      frequency      : 0,
+      customFrequency: 0,
+      activeA        : false,
+      invertedA      : false,
+      activeB        : false,
+      invertedB      : false
+    },
     resultCode     : ''
   },
   methods: {
     getCode: function () {
       // inputs
-      var usage = this.usage;
-      var frequency = this.frequency;
+      var usage = this.inputData.usage;
+      var frequency = this.inputData.frequency;
       if (frequency == 15 || frequency == 16) {
-        var customFrequency = this.customFrequency;
+        var customFrequency = this.inputData.customFrequency;
         if(!customFrequency) {
           this.resultCode = '// Specify a custom frequency!';
           return;
         }
       }
       if (frequency != 15) {
-        var activeA = this.activeA;
-        var invertedA = this.invertedA;
+        var activeA = this.inputData.activeA;
+        var invertedA = this.inputData.invertedA;
       }
-      var activeB = this.activeB;
-      var invertedB = this.activeB;
+      var activeB = this.inputData.activeB;
+      var invertedB = this.inputData.activeB;
 
       // calculations
       if (customFrequency) {
@@ -204,10 +335,6 @@ new Vue({
         '}\n';
 
         this.resultCode = resultCode;
-    },
-    setFrequency: function () {
-      if (this.usage == 2)
-        this.frequency = 15;
     }
   }
 })

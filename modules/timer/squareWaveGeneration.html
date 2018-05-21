@@ -31,47 +31,11 @@
               <div class="col-md-6">
                 <h4>Set Up</h4>
                 <form>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="frequency">Frequency (Hz):</label>
-                    </div>
-                    <div class="col-8">
-                      <input type="number" class="form-control" v-model.number="frequency" id="frequency">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="offsetB">Output B's offset (°):</label>
-                    </div>
-                    <div class="col-8">
-                      <input type="number" class="form-control" v-model.number="offsetB" id="offsetB">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="activeA">Output A active:</label>
-                    </div>
-                    <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="activeA" id="activeA">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="activeB">Output B active:</label>
-                    </div>
-                    <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="activeB" id="activeB">
-                    </div>
-                  </div>
+                  <input-field v-bind:input-data="inputData"></input-field>
                   <result-code v-bind:result-code="resultCode" v-bind:get-code="getCode"></result-code>
                 </form>
               </div>
-              <div class="col-md-6 pt-3 mt-4 mt-md-0 information">
-                <h4 class="title">Additional Information</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed dolor a libero gravida sagittis at non augue. Vivamus pretium faucibus est. Cras pellentesque luctus venenatis. In faucibus nisi justo, ac gravida est ullamcorper eget. Sed rutrum dolor ipsum, sed ornare tortor ullamcorper at. Vivamus ac felis in mi gravida suscipit. Praesent vehicula dapibus risus, eu eleifend sem commodo eu. Integer fermentum diam ut diam viverra venenatis. In id fermentum nulla, et euismod ligula. Quisque at ligula sit amet tortor fermentum suscipit. Etiam malesuada, libero eu elementum suscipit, urna justo gravida ex, et laoreet magna nibh nec ipsum. Phasellus sit amet orci eget sem tempus lobortis. Vivamus consectetur arcu non neque feugiat, ac tincidunt tortor bibendum. Morbi tortor turpis, volutpat in blandit sit amet, pellentesque vel felis. Morbi odio mauris, interdum at eros at, elementum ultrices purus. Morbi a nisi ultrices, condimentum neque in, elementum mauris.</p>
-              </div>
+              <information-boxes v-bind:input-data="inputData"></information-boxes>
             </div>
           </div>
         </div>

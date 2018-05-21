@@ -31,113 +31,11 @@
               <div class="col-md-6">
                 <h4>Set Up</h4>
                 <form>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="mode">Mode:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model.number="mode" id="mode">
-                        <option value="0">Polling</option>
-                        <option value="1">Interrupt</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="resolution">Resolution:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model.number="resolution" id="resolution">
-                        <option value="0">0.0625 us</option>
-                        <option value="1">0.5 us</option>
-                        <option value="2">4 us</option>
-                        <option value="3">16 us</option>
-                        <option value="4">64 us</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="edge">Edge Detection:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model.number="edge" id="edge">
-                        <option value="0">Positive then negative edge (high)</option>
-                        <option value="1">Negative then positive edge (low)</option>
-                        <option value="2">Positive edges (period)</option>
-                        <option value="3">Negative edges (period)</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="pin">Input Pin:</label>
-                    </div>
-                    <div class="col-8">
-                      <select class="form-control" v-model.number="pin" id="pin">
-                        <option disabled>Digital:</option>
-                        <option value="0">- ICP1</option>
-                        <option disabled>Analog:</option>
-                        <option value="1">- AIN1</option>
-                        <option value="2">- ADC0</option>
-                        <option value="3">- ADC1</option>
-                        <option value="4">- ADC2</option>
-                        <option value="5">- ADC3</option>
-                        <option value="6">- ADC4</option>
-                        <option value="7">- ADC5</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-4">
-                      <label class="label-right col-form-label" for="software">Software Extension:</label>
-                    </div>
-                    <div class="col-8 form-check">
-                      <input type="checkbox" class="form-check-input position-static label-right mt-3" v-model="software" id="software">
-                    </div>
-                  </div>
-
+                  <input-field v-bind:input-data="inputData"></input-field>
                   <result-code v-bind:result-code="resultCode" v-bind:get-code="getCode"></result-code>
-
                 </form>
               </div>
-              <div class="col-md-6 mt-4 mt-md-0" v-cloak>
-                <h4>Additional Information:</h4>
-                <div class="col-12 information mb-3 py-4">
-                  <h5 class="info-title">Mode:</h5>
-                  <p v-if="mode == 0">Polling: uses all the processors capacities while measuring time intervals, but can be used for shorter widths (~2 us).</p>
-                  <p v-if="mode == 1">Interrupt driven: the processor can run other codes than checking a flag untill the measure finihses. Slightly worse then polling mode when it comes to short pulse widths.</p>
-                  <p>You can read more about the input capture unit in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 20.9. section.</p>
-                </div>
-                <div class="col-12 information mb-3 py-4">
-                  <h5 class="info-title">Edge detection:</h5>
-                  <p v-if="edge == 0">Duty cycle: first waits for a positive edge and after saving the registers value changes edge detection.</p>
-                  <p v-if="edge == 1">Inverted duty cycle: first waits for a negative edge and after saving the registers value changes edge detection.</p>
-                  <p v-if="edge == 2">Positive edges: using this detection we are able to measure the signals period on positive edges.</p>
-                  <p v-if="edge == 3">Negative edges: using this detection we are able to measure the signals period on negative edges.</p>
-                </div>
-                <div class="col-12 information mb-3 py-4">
-                  <h5 class="info-title">Input pin:</h5>
-                    <p>
-                      <span v-if="triggerSource == 0">ICP1: this is the main pin when using the input capture, placed on pin 8.</span>
-                      <span v-if="triggerSource == 1">Free runnung: the ADC will start convesarions after it finish one, untill you stop it by software.</span>
-                      <span v-if="triggerSource == 2">Analog comparator: the units interrupt is used as a trigger event for the ADC. You can read more in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 27. section.</p>
-                      <span v-if="triggerSource == 3">External interrupt: you can connect your external trigger source on pin 2.</p>
-                      <span v-if="triggerSource == 4">Timer 0 - overflow: this case you are able to use the preconfigured timers overflow event as a trigger source.</p>
-                      <span v-if="triggerSource == 5">Timer 1 - compare match B: you can configure the frequency by OCR1A in CTC mdoe and set the exact time of the trigger by OCR1B.</p>
-                      <span v-if="triggerSource == 6">Timer 1 - overflow: you can configure the timers frequency in CTC mode by OCR1A, an overflow triggers a conversation.</p>
-                      <span v-if="triggerSource == 7">Timer 1 - input capture: this trigger source allows you to start convesion based on the signal on ICP1 input at pin 8.</p>
-                      <span v-if="triggerSource == 5 || triggerSource == 6 || triggerSource == 7">You can read a lot more about Timer 1 and its modes in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 20. section.</p>
-                      <span>You can read more about trigger sources in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 28.3. section.</p>
-                    </p>
-                </div>
-                <div class="col-12 information mb-3 py-4">
-                  <h5 class="info-title">Justification:</h5>
-                  <p v-if="leftAdjusted">Left: using this is easier to use the ADC in 8 bit mode, because you only have to read the high byte of the resutl.</p>
-                  <p v-if="!leftAdjusted">Right: use this if you want a 10 bit result.</p>
-                  <p>You can read more about lowering the resoultion in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 28.2. section.</p>
-                </div>
-              </div>
+              <information-boxes v-bind:input-data="inputData"></information-boxes>
             </div>
           </div>
         </div>

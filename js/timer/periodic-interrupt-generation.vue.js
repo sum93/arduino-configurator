@@ -28,6 +28,33 @@ Vue.component('input-field', {
   `
 });
 
+Vue.component('information-boxes', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
+      <h4>Additional Information:</h4>
+      <div class="col-12 information pt-4 pb-2">
+        <p>
+          This is the functionality of this application.
+        </p>
+        <h5 class="info-title">Domain:</h5>
+        <p>
+          <span v-if="inputData.domain == 0">Time<br/></span>
+          <span v-if="inputData.domain == 1">Frequency<br/></span>
+          <span>You can read more <a v-bind:href="datasheet(0)">here</a>.</span>
+        </p>
+      </div>
+    </div>
+  `,
+  methods: {
+    datasheet: function (pageNumber){
+      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
+    }
+  }
+})
+
 new Vue({
   el: '#periodic-interrupt-generation',
   data: {
