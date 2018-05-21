@@ -49,13 +49,15 @@ Vue.component('information-boxes', {
       <h4>Additional Information:</h4>
       <div class="col-12 information pb-2 pt-4">
         <p>
-          Some info about the functonalities.<br/>
-          Read more <a v-bind:href="datasheet(0)" target="_blank">here</a>.
+          This mode uses the output compare unit A and B of the Timer/Counter1 unit to generate square wave.<br/>
+          The output compare units' output can switch states based on the compare match event between the compare registers and the timer register.<br/>
+          While using the generated code, you won't be able to use the Servo library neither the analonWrite builtin function on pin 9 and 10.<br/>
+          You can read more about the output compare units <a v-bind:href="datasheet(157)" target="_blank">here</a>.
         </p>
         <div v-if="inputData.activeB">
           <h5 class="title">Output B's offset:</h5>
           <p>
-            Output b offset. yes.
+            The frequency is set by the OCR1A register, but we are free to modify the OCR1B register. This means we can generate different waves in different phase up to 180°.
           </p>
         </div>
       </div>

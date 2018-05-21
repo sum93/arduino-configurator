@@ -1,57 +1,4 @@
 
-Vue.component('information-boxes', {
-  props: [
-    'inputData'
-  ],
-  template: `
-    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
-      <h4>Additional Information:</h4>
-      <div class="col-12 information pb-2 pt-4">
-        <p>
-          Some info about the functonalities.
-        </p>
-        <h5 class="info-title">Reference Voltage:</h5>
-        <p>
-          <span v-if="inputData.referenceVoltage == 0">Vcc - supply voltage: uses the supply voltage as reference which is 5 V.<br/></span>
-          <span v-if="inputData.referenceVoltage == 1">Bandgap - inner voltage reference: this voltage reference provides a very close voltage to 1.1 V at most temperature.<br/></span>
-          <span v-if="inputData.referenceVoltage == 2">AREF - external reference voltage: you can use your own voltage reference connecting it to the AREF pin.<br/></span>
-          <span>Note that, if you have a voltage connected to the AREF pin you can't use the other reference options.<br/>You can read more about voltage references <a v-bind:href="datasheet(311)" target="_blank">here</a>.</span>
-        </p>
-        <h5 class="info-title">Input Channel:</h5>
-        <p>
-          <span v-if="inputData.inputSource != 6">Analog inputs: use these inputs to measure an external signals voltage or current.<br/></span>
-          <span v-if="inputData.inputSource == 6">Inner temperature sensor: this is a built in sensor connected to the ADCs multiplexer unit. You can read more about this sensor <a v-bind:href="datasheet(316)" target="_blank">here</a>.<br/></span>
-          <span>You can switch between input channels by modifiing the multiplexers register, however in free running mode it is not advised.<br/>You can read more about input channels <a v-bind:href="datasheet(311)" target="_blank">here</a>.</span>
-        </p>
-        <h5 class="info-title">Trigger Source:</h5>
-        <p>
-          <span v-if="inputData.triggerSource == 0">Manual: you have to start a conversation by software every time you want to measure a channel.<br/></span>
-          <span v-if="inputData.triggerSource == 1">Free runnung: the ADC will start convesarions after it finish one, untill you stop it by software.<br/></span>
-          <span v-if="inputData.triggerSource == 2">Analog comparator: the units interrupt is used as a trigger event for the ADC. You can read more <a v-bind:href="datasheet(299)" target="_blank">here</a>.<br/></span>
-          <span v-if="inputData.triggerSource == 3">External interrupt: you can connect your external trigger source on pin 2.<br/></span>
-          <span v-if="inputData.triggerSource == 4">Timer 0 - overflow: this case you are able to use the preconfigured timers overflow event as a trigger source.<br/></span>
-          <span v-if="inputData.triggerSource == 5">Timer 1 - compare match B: you can configure the frequency by OCR1A in CTC mdoe and set the exact time of the trigger by OCR1B.<br/></span>
-          <span v-if="inputData.triggerSource == 6">Timer 1 - overflow: you can configure the timers frequency in CTC mode by OCR1A, an overflow triggers a conversation.<br/></span>
-          <span v-if="inputData.triggerSource == 7">Timer 1 - input capture: this trigger source allows you to start convesion based on the signal on ICP1 input at pin 8.<br/></span>
-          <span v-if="inputData.triggerSource == 5 || inputData.triggerSource == 6 || inputData.triggerSource == 7">You can read a lot more about Timer 1 and its modes <a v-bind:href="datasheet(149)" target="_blank">here</a>.<br/></span>
-          <span>You can read more about trigger sources <a v-bind:href="datasheet(307)" target="_blank">here</a>.</span>
-        </p>
-        <h5 class="info-title">Justification:</h5>
-        <p>
-          <span v-if="inputData.leftAdjusted">Left: using this is easier to use the ADC in 8 bit mode, because you only have to read the high byte of the resutl.<br/></span>
-          <span v-if="!inputData.leftAdjusted">Right: use this if you want a 10 bit result.<br/></span>
-          <span>You can read more about lowering the resoultion <a v-bind:href="datasheet(305)" target="_blank">here</a>.</span>
-        </p>
-      </div>
-    </div>
-  `,
-  methods: {
-    datasheet: function (pageNumber){
-      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
-    }
-  }
-});
-
 Vue.component('input-field', {
   props: [
     'inputData'
@@ -191,6 +138,61 @@ Vue.component('input-field', {
         this.inputData.referenceVoltage = 1;
         this.inputData.triggerSource = 0;
       }
+    }
+  }
+});
+
+Vue.component('information-boxes', {
+  props: [
+    'inputData'
+  ],
+  template: `
+    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
+      <h4>Additional Information:</h4>
+      <div class="col-12 information pb-2 pt-4">
+        <p>
+          In this application we are able to start conversions by software or hardware. All conversions handled by interrupts, so the processor can run other tasks meanwhile the conversion which time interval is roughly 100us.<br/>
+          While using this generated code, it is not recommended to use the analogeRead() function.<br/>
+          You can read more about the ADC unit <a v-bind:href="datasheet(311)" target="_blank">here</a>.
+        </p>
+        <h5 class="info-title">Reference Voltage:</h5>
+        <p>
+          <span v-if="inputData.referenceVoltage == 0">Vcc - supply voltage: uses the supply voltage as reference which is 5 V.<br/></span>
+          <span v-if="inputData.referenceVoltage == 1">Bandgap - inner voltage reference: this voltage reference provides a very close voltage to 1.1 V at most temperature.<br/></span>
+          <span v-if="inputData.referenceVoltage == 2">AREF - external reference voltage: you can use your own voltage reference connecting it to the AREF pin.<br/></span>
+          <span>Note that, if you have a voltage connected to the AREF pin you can't use the other reference options.<br/>You can read more about voltage references <a v-bind:href="datasheet(311)" target="_blank">here</a>.</span>
+        </p>
+        <h5 class="info-title">Input Channel:</h5>
+        <p>
+          <span v-if="inputData.inputSource != 6">Analog inputs: use these inputs to measure an external signals voltage or current.<br/></span>
+          <span v-if="inputData.inputSource == 6">Inner temperature sensor: this is a built in sensor connected to the ADCs multiplexer unit. You can read more about this sensor <a v-bind:href="datasheet(316)" target="_blank">here</a>.<br/></span>
+          <span>You can switch between input channels by modifiing the multiplexers register, however in free running mode it is not advised.<br/>You can read more about input channels <a v-bind:href="datasheet(311)" target="_blank">here</a>.</span>
+        </p>
+        <h5 class="info-title">Trigger Source:</h5>
+        <p>
+          <span v-if="inputData.triggerSource == 0">Manual: you have to start a conversation by software every time you want to measure a channel.<br/></span>
+          <span v-if="inputData.triggerSource == 1">Free runnung: the ADC will start convesarions after it finish one, untill you stop it by software.<br/></span>
+          <span v-if="inputData.triggerSource == 2">Analog comparator: the units interrupt is used as a trigger event for the ADC. You can read more <a v-bind:href="datasheet(299)" target="_blank">here</a>.<br/></span>
+          <span v-if="inputData.triggerSource == 3">External interrupt: you can connect your external trigger source on pin 2.<br/></span>
+          <span v-if="inputData.triggerSource == 4">Timer 0 - overflow: this case you are able to use the preconfigured timers overflow event as a trigger source.<br/></span>
+          <span v-if="inputData.triggerSource == 5">Timer 1 - compare match B: you can configure the frequency by OCR1A in CTC mdoe and set the exact time of the trigger by OCR1B.<br/></span>
+          <span v-if="inputData.triggerSource == 6">Timer 1 - overflow: you can configure the timers frequency in CTC mode by OCR1A, an overflow triggers a conversation.<br/></span>
+          <span v-if="inputData.triggerSource == 7">Timer 1 - input capture: this trigger source allows you to start convesion based on the signal on ICP1 input at pin 8.<br/></span>
+          <span v-if="inputData.triggerSource == 5 || inputData.triggerSource == 6 || inputData.triggerSource == 7">You can read a lot more about Timer 1 and its modes <a v-bind:href="datasheet(149)" target="_blank">here</a>.<br/></span>
+          <span>You can read more about trigger sources <a v-bind:href="datasheet(307)" target="_blank">here</a>.</span>
+        </p>
+        <h5 class="info-title">Justification:</h5>
+        <p>
+          <span v-if="inputData.leftAdjusted">Left: using this is easier to use the ADC in 8 bit mode, because you only have to read the high byte of the resutl.<br/></span>
+          <span v-if="!inputData.leftAdjusted">Right: use this if you want a 10 bit result.<br/></span>
+          <span>You can read more about lowering the resoultion <a v-bind:href="datasheet(305)" target="_blank">here</a>.</span>
+        </p>
+      </div>
+    </div>
+  `,
+  methods: {
+    datasheet: function (pageNumber){
+      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
     }
   }
 });

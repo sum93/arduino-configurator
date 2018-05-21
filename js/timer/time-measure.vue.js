@@ -1,50 +1,3 @@
-Vue.component('information-boxes', {
-  props:[
-    'inputData'
-  ],
-  template: `
-    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
-      <h4>Additional Information:</h4>
-      <div class="col-12 information pb-2 pt-4">
-        <p>
-          Some info about the functonalities.
-        </p>
-        <h5 class="info-title">Mode:</h5>
-        <p>
-          <span v-if="inputData.mode == 0">Polling: uses all the processors capacities while measuring time intervals, but can be used for shorter widths (~2 us).<br/></span>
-          <span v-if="inputData.mode == 1">Interrupt driven: the processor can run other codes than checking a flag untill the measure finihses. Slightly worse then polling mode when it comes to short pulse widths.<br/></span>
-          <span>You can read more about the input capture unit in the <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf" target="_blank">datasheets</a> 20.9. section.</span>
-        </p>
-        <h5 class="info-title">Edge detection:</h5>
-        <p>
-          <span v-if="inputData.edge == 0">Duty cycle: first waits for a positive edge and after saving the registers value changes edge detection.<br/></span>
-          <span v-if="inputData.edge == 1">Inverted duty cycle: first waits for a negative edge and after saving the registers value changes edge detection.<br/></span>
-          <span v-if="inputData.edge == 2">Positive edges: using this detection we are able to measure the signals period on positive edges.<br/></span>
-          <span v-if="inputData.edge == 3">Negative edges: using this detection we are able to measure the signals period on negative edges.<br/></span>
-        </p>
-        <h5 class="info-title">Input pin:</h5>
-        <p>
-          <span v-if="inputData.pin == 0">ICP1<br/></span>
-          <span v-if="inputData.pin == 1">AIN1<br/></span>
-          <span v-if="inputData.pin != 0 && inputData.pin != 1">ADCn<br/></span>
-          <span>Read more <a v-bind:href="datasheet(0)" target="_blank">here</a>.</span>
-        </p>
-        <h5 class="info-title">Software extension:</h5>
-        <p>
-          <span v-if="inputData.software">Yes<br/></span>
-          <span v-if="!inputData.software">No<br/></span>
-          <span>Read more <a href="datasheet(0)" target="_blank">here</a>.</span>
-        </p>
-      </div>
-    </div>
-  `,
-  methods: {
-    datasheet: function (pageNumber){
-      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
-    }
-  }
-})
-
 Vue.component('input-field', {
   props: [
     'inputData'
@@ -118,7 +71,55 @@ Vue.component('input-field', {
       </div>
     </div>
   `
-})
+});
+
+Vue.component('information-boxes', {
+  props:[
+    'inputData'
+  ],
+  template: `
+    <div class="col-md-6 mt-4 mt-md-0" v-cloak>
+      <h4>Additional Information:</h4>
+      <div class="col-12 information pb-2 pt-4">
+        <p>
+          In this application we can measure time with hardware by the Timer/Counter1's input capture unit. This provides more functionality and precision than the built in Arduino functions.<br/>
+          While using the generated code, you won't be able to use the Servo library neither the analonWrite builtin function on pin 9 and 10.<br/>
+          For more information on the input capture unit click <a v-bind:href="datasheet(155)" target="_blank">here</a>.
+        </p>
+        <h5 class="info-title">Mode:</h5>
+        <p>
+          <span v-if="inputData.mode == 0">Polling: uses all of the processors capacities while measuring time intervals, but can be used for shorter widths (~2 us).<br/></span>
+          <span v-if="inputData.mode == 1">Interrupt driven: the processor can run other codes till the end of measure interrupt signals. Slightly worse then polling mode when it comes to short pulse widths.<br/></span>
+          </p>
+        <h5 class="info-title">Edge detection:</h5>
+        <p>
+          <span v-if="inputData.edge == 0">Duty cycle: first waits for a positive edge and after saving the registers value changes edge detection.<br/></span>
+          <span v-if="inputData.edge == 1">Inverted duty cycle: first waits for a negative edge and after saving the registers value changes edge detection.<br/></span>
+          <span v-if="inputData.edge == 2">Positive edges: using this detection we are able to measure the signals period on positive edges.<br/></span>
+          <span v-if="inputData.edge == 3">Negative edges: using this detection we are able to measure the signals period on negative edges.<br/></span>
+        </p>
+        <h5 class="info-title">Input pin:</h5>
+        <p>
+          <span v-if="inputData.pin == 0">ICR1: this is the standard input capture pin, use this if possible.<br/></span>
+          <span v-if="inputData.pin == 1">AIN1: using this input requires the analog comparator unit. Its output can be wired into the input capture unit.<br/></span>
+          <span v-if="inputData.pin != 0 && inputData.pin != 1">ADCn: using one of these inputs requies the analog comparator and the ADCs multiplexer. The comporators output is wired into the capture unit.<br/></span>
+          <span>You can read more about the capture trigger source <a v-bind:href="datasheet(156)" target="_blank">here</a>.</span>
+        </p>
+        <div v-if="inputData.software">
+          <h5 class="info-title">Software extension:</h5>
+          <p>
+            <span v-if="inputData.software">You can measure significantly wider time periods without sacrifising the hardwares precision.<br/></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  `,
+  methods: {
+    datasheet: function (pageNumber){
+      return 'http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-42735-8-bit-AVR-Microcontroller-ATmega328-328P_Datasheet.pdf' + '#page=' + pageNumber;
+    }
+  }
+});
 
 new Vue({
   el: '#time-measure',
@@ -372,4 +373,4 @@ new Vue({
       this.resultCode = resultCode;
     }
   }
-})
+});

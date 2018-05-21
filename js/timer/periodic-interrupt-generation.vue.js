@@ -29,21 +29,15 @@ Vue.component('input-field', {
 });
 
 Vue.component('information-boxes', {
-  props: [
-    'inputData'
-  ],
   template: `
     <div class="col-md-6 mt-4 mt-md-0" v-cloak>
       <h4>Additional Information:</h4>
       <div class="col-12 information pt-4 pb-2">
         <p>
-          This is the functionality of this application.
-        </p>
-        <h5 class="info-title">Domain:</h5>
-        <p>
-          <span v-if="inputData.domain == 0">Time<br/></span>
-          <span v-if="inputData.domain == 1">Frequency<br/></span>
-          <span>You can read more <a v-bind:href="datasheet(0)">here</a>.</span>
+          This application generates interrupts on the Timer/Counter1's overflow event. By using the CTC mode it's easy to configure the time intervals.<br/>
+          If needed the generated code uses software extension, so there is no limitations by the hardware.<br/>
+          While using the generated code, you won't be able to use the Servo library neither the analonWrite builtin function on pin 9 and 10.<br/>
+          You can read more about this timer mode <a v-bind:href="datasheet(161)" target="_blank">here</a>.
         </p>
       </div>
     </div>

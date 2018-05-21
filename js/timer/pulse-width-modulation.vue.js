@@ -7,14 +7,15 @@ Vue.component('information-boxes', {
       <h4>Additional Information:</h4>
       <div class="col-12 information pb-2 pt-4">
         <p>
-          Some info about the functonalities.
+          In this application we use the Timer/Counter1 unit for PWM waveform generation. More functionality provided than the built in function.<br/>
+          While using the generated code, you won't be able to use the Servo library neither the analonWrite builtin function on pin 9 and 10.<br/>
+          You can read more about PWM modes <a v-bind:href="datasheet(162)" target="_blank">here</a>.
         </p>
         <h5 class="title">Frequency:</h5>
         <p>
           <span v-if="inputData.frequency != 15 && inputData.frequency != 16">Preset frequencies: try to use one of these, since they have the most functionality.<br/></span>
           <span v-if="inputData.frequency == 15">OCR1A - this allows you to achive higher PWM resolution and you can set custom frequencies, but revokes the ability to use the OC1A output.<br/></span>
-          <span v-if="inputData.frequency == 16">ICR1 - allow you to set custom frequencies and achive higher PWM resoulution, but since the register is not double buffered you can't load low values in it, otherwise it would miss it.<br/></span>
-          <span>You can read a lot more about PWM modes <a v-bind:href="datasheet(160)" target="_blank">here</a>.</span>
+          <span v-if="inputData.frequency == 16">ICR1 - allow you to set custom frequencies and achive higher PWM resoulution, but since the register is not double buffered you can't load low values in it, otherwise it would miss it.</span>
         </p>
       </div>
     </div>
